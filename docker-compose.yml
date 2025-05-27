@@ -163,18 +163,31 @@ services:
 
 
 
-  frontend:
+  # frontend:
+  #   build:
+  #     context: ./EMS-Frontend
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - ems-user
+  #     - ems-task
+  #     - ems-report
+  #   ports:
+  #     - "3000:80"
+  #   networks:
+  #     - ems_network
+
+  frontend-dev:
     build:
-      context: ./EMS
-      dockerfile: Dockerfile
+      context: ./EMS-Frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3000"  # Host:Container (Vite usually runs on 3000)
+    volumes:
+      - ./EMS-Frontend:/app
+    
+    networks:
+      - ems_network
     depends_on:
       - ems-user
       - ems-task
       - ems-report
-    ports:
-      - "3000:80"
-    networks:
-      - ems_network
-
-
-
